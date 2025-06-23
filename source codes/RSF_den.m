@@ -27,6 +27,7 @@ SS = sqrt(sum(X.^2, 2));
 Xs = X./repmat(SS, 1, p);   
 
 T = size(Xs,1);
+
 fs = zeros(Tgrid,1);
 for j = 1:Tgrid
     x = repmat(xgrids(j,:), T, 1);
@@ -34,7 +35,6 @@ for j = 1:Tgrid
 
     fs(j) = sum(exp(-(1 - K)./h));
 end
-
 
 func = @(t,q,h) exp(-(1-t)/h).*((1-(t).^2).^((1/2).*(q-3))).* (2.* (pi).^((1/2).*(q-1))) ./ gamma((1/2).*(q-1));
 

@@ -23,7 +23,7 @@ for i = 1:n_iter
     rng(i) ;
     
     if threshold == 0
-        X1 = rejection_sampling(theta, n_samples); % data on the first orchant of 3-dim sphere
+        X1 = rejection_sampling(theta, n_samples); % data on the first orthant of 3-dim sphere
     else
         X1 = rejection_sampling(theta, n_samples);
         X1 = nondetect(X1, threshold);

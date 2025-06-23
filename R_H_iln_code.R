@@ -102,10 +102,32 @@ X1 = as.matrix(read.csv('./food/H_iln/ilr_beef.csv', header = FALSE))
 H1 = Hscv(X1)
 write.csv(H1, file = './food/H_iln/H_beef.csv', row.names = FALSE)
 
+X2 = as.matrix(read.csv('./food/H_iln/ilr_beverage.csv', header = FALSE))
+H2 = Hscv(X2)
+write.csv(H2, './food/H_iln/H_beverage.csv', row.names = FALSE)
+
 X3 = as.matrix(read.csv('./food/H_iln/ilr_fish.csv', header = FALSE))
 H3 = Hscv(X3)
 write.csv(H3, './food/H_iln/H_fish.csv', row.names = FALSE)
 
+X4 = as.matrix(read.csv('./food/H_iln/ilr_pork.csv', header = FALSE))
+H4 = Hscv(X4)
+write.csv(H4, './food/H_iln/H_pork.csv', row.names = FALSE)
+
+
+# Nut Real Data Analysis
+
+X1 = as.matrix(read.csv('./food/H_iln/ilr_sausages.csv', header = FALSE))
+H1 = Hscv(X1)
+write.csv(H1, file = './food/H_iln/H_sausages.csv', row.names = FALSE)
+
+X2 = as.matrix(read.csv('./food/H_iln/ilr_snacks.csv', header = FALSE))
+H2 = Hscv(X2)
+write.csv(H2, './food/H_iln/H_snacks.csv', row.names = FALSE)
+
+X3 = as.matrix(read.csv('./food/H_iln/ilr_spices.csv', header = FALSE))
+H3 = Hscv(X3)
+write.csv(H3, './food/H_iln/H_spices.csv', row.names = FALSE)
 
 X4 = as.matrix(read.csv('./food/H_iln/ilr_sweet.csv', header = FALSE))
 H4 = Hscv(X4)

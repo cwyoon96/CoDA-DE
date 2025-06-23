@@ -4,12 +4,17 @@ clear;clc;close all;
 addpath('./ternary2');
 addpath('./source codes')
 
+% four group 
+
 beef = readmatrix('./food/beef_nut.csv'); 
+beverage = readmatrix('./food/beverage_nut.csv'); 
 fish = readmatrix('./food/fish_nut.csv'); 
+pork = readmatrix('./food/pork_nut.csv'); 
 
 beef = beef(:,2:4); 
 fish = fish(:,2:4); 
 
+beverage(any(isnan(beverage),2) , :) = [];  beverage; % NaN obs deleted. 338 by 3
 
 % ILR transformed data -> need to obtain bandwidth parameter H
 
@@ -69,16 +74,26 @@ addpath('./ternary2');
 addpath('./ternary2_new');
 addpath('./source codes')
 
+% four group 
 
+sausages = readmatrix('./food/sausages_nut.csv'); 
 sweet = readmatrix('./food/sweet_nut.csv');
 
 sweet(40,:) = []; % due to zero replacement error
 
+sausages = sausages(:,2:4);
 sweet = sweet(:,2:4);
 
 
 mymap = [0 0.4470 0.7410; 255/255,69/255,0]; colormap(mymap);
 
+% sausages
+
+terplot3_new;
+hold on
+symbol = 'o';   size_ = 60;  alpha = 0.2;    color = 'blue'; % blue color
+tergscatter3_new(sausages(:,1), sausages(:,2), sausages(:,3),ones(size(sausages,1),1), symbol, size_, alpha, color);
+terlabel3_new('Carbohydrate',  'Protein','Fat',18);
 
 % sweet
 
@@ -91,8 +106,10 @@ terlabel3_new('Carbohydrate',  'Protein','Fat',18);
 
 % ILR transformed data -> need to obtain bandwidth parameter H
 
+ilr_sausages = ilr(zero_replacement(sausages,0.001)); 
 ilr_sweet = ilr(zero_replacement(sweet,0.001));
 
+writematrix(ilr_sausages, './food/H_iln/ilr_sausages.csv'); 
 writematrix(ilr_sweet, './food/H_iln/ilr_sweet.csv'); 
 
 %% ================================ %%
@@ -105,9 +122,15 @@ xgrid = xgrid'/ngrid;
 
 % estimated density for each group with three kernel methods
 
+[RSF_fc_sausages, SQR_fc_sausages , dirichlet_fc_sausages, log_norm_fc_sausages,h1,h2,h3,h4] = real_data_result(ngrid,sausages);
+
 [RSF_fc_sweet, SQR_fc_sweet, dirichlet_fc_sweet, log_norm_fc_sweet,h13,h14,h15,h16] = real_data_result(ngrid,sweet);
 
 % esitmated density for each group with iln kernel
+
+best_h = readmatrix('./food/H_iln/H_sausages.csv');
+best_h(2,1) = best_h(1,2); % fix symmetry error
+[~, iln_fc_sausages] = ilrKDE(sausages, best_h, ngrid); % ngrid = 100
 
 
 best_h = readmatrix('./food/H_iln/H_sweet.csv');
@@ -116,6 +139,13 @@ best_h(2,1) = best_h(1,2); % fix symmetry error
 
 
 % export estimated density 
+
+writematrix(RSF_fc_sausages, './food/estimated density/KDE_RSF_sausages.csv');
+writematrix(SQR_fc_sausages, './food/estimated density/KDE_SQR_sausages.csv'); 
+writematrix(dirichlet_fc_sausages, './food/estimated density/KDE_dir_sausages.csv'); 
+writematrix(log_norm_fc_sausages, './food/estimated density/KDE_log_sausages.csv'); 
+writematrix(iln_fc_sausages ,'./food/estimated density/KDE_iln_sausages.csv'); 
+
 
 writematrix(RSF_fc_sweet, './food/estimated density/KDE_RSF_sweet.csv');
 writematrix(SQR_fc_sweet, './food/estimated density/KDE_SQR_sweet.csv'); 
