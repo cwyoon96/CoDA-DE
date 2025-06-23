@@ -1,0 +1,1 @@
+Code & data for the manuscript "Kernel Density Estimation for Compositional Data with Zeros via Hypersphere Mapping". The food composition datasets are obtained by preprocessing the data obtained from the USDA National Nutrient Database for Standard Reference at https://doi.org/10.15482/USDA.ADC/1529216.
